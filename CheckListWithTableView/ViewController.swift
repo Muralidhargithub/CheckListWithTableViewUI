@@ -51,15 +51,48 @@ class ViewController: UIViewController {
             ]
         
         setupFooterView()
+        setupNavigationBarButtons()
+    }
+    
+    private func setupNavigationBarButtons() {
+        // Profile Button on the Left
+        let profileButton = UIButton(type: .system)
+        profileButton.setTitle("K", for: .normal) // Single letter "P"
+        profileButton.setTitleColor(.white, for: .normal)
+        profileButton.backgroundColor = .darkGray
+        profileButton.layer.cornerRadius = 15 // Rounded button
+        profileButton.clipsToBounds = true
+        profileButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        profileButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        profileButton.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        let profileBarButtonItem = UIBarButtonItem(customView: profileButton)
+
+        // "+" Button on the Right
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        addButton.tintColor = .white
+
+        // Assign Buttons to Navigation Item
+        navigationItem.leftBarButtonItem = profileBarButtonItem
+        navigationItem.rightBarButtonItem = addButton
+    }
+
+    @objc private func profileButtonTapped() {
+        print("Profile button tapped")
+    }
+
+    @objc private func addButtonTapped() {
+        print("+ button tapped")
     }
     
     private func setupFooterView() {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
         footerView.backgroundColor = .black
         
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 70, width: footerView.frame.width, height: 50))
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 30, width: footerView.frame.width, height: 50))
             searchBar.placeholder = "Search"
-        searchBar.barStyle = .default
+        searchBar.barStyle = .black
+        searchBar.searchTextField.backgroundColor = UIColor .lightGray
+
             searchBar.backgroundImage = UIImage() // Removes the default background
             searchBar.searchTextField.textColor = .white // Set text color
             footerView.addSubview(searchBar)
@@ -100,6 +133,8 @@ extension ViewController: UITableViewDataSource {
         cell.contentView.addSubview(border)
         
         return cell
+        
+        
     }
 
 }
